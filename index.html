@@ -1,0 +1,337 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Free Museum Access for NYU Students</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.css" />
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,300' rel='stylesheet' type='text/css'>
+
+  <style type ="text/css">
+  
+
+  	h1 {
+  		font-family: Roboto;
+	    letter-spacing: 1px;
+		font-size: 35px;
+		font-weight:500;
+	}
+
+	h2 {
+		font-family: Roboto;
+	    letter-spacing: 0px;
+		font-size: 10px;
+		font-weight:400;
+	
+  	}
+
+ 	h3 {
+		font-family: Roboto;
+	    letter-spacing: 0px;
+		font-size: 18px;
+		font-weight:500;
+	}
+
+	h4 {
+		font-family: Roboto;
+	    letter-spacing: 0px;
+		font-size: 12px;
+		font-weight:400;
+	
+  	}
+
+	#in {
+		width: 75%;
+	}
+	
+	
+
+  	#bg{
+  		background: #57068C;
+  		border: 0px;
+  		height:115px;
+  		width:100%;
+  		margin-top:0px;
+
+  	}
+
+  	img{
+  		margin-top:15px;
+  		margin-left:10px;
+  		margin-bottom:10px;
+  	}
+
+   	#myMap {
+  		width:75%;
+  		height:500px;
+  		background-color: gray;
+
+  	}
+    button {
+    	width: 160px;
+    	height: 30px;
+    	margin-bottom: 10px;
+    	font-size: 13px;
+     	border: 0px;
+     	margin-right: 0px;
+    	background:#6E18B2;
+    	color:white;
+
+    }
+
+    
+    #four {
+      width: 160px;
+      height: 30px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      border: 0px;
+      margin-right: 0px;
+      background:#620EA5;
+      color:white;
+
+    }
+
+    body { 
+    	background: #fff; 
+      top: 50px;
+      margin: 0;
+    }
+
+
+	#wrapper {
+		margin-left: 17%;
+	}
+
+	
+    header { 
+    	
+   		height:100px;
+    	background-color:#57068C;
+    	background-position: bottom left; 
+    }
+	
+	
+  	</style>
+
+</head>
+ 
+
+<body>
+ 	<div id="bg">
+
+<img src="nyu.png"><br>
+
+ 	<button id="one" class="myButton">Downtown</button>
+ 	<button id="two" class="myButton">Midtown</button>
+ 	<button id="three" class="myButton">Uptown</button>
+  <button id="four" class="myButton">Queens</button>
+</div>
+ 	
+ 	<br>
+ 
+ 	<div id="wrapper"><h1>Free Museum Access</h1>
+ 	</div>
+
+
+
+
+ 	<div id="wrapper"><div id="myMap"></div>
+ 	 <br>
+
+<div id="in">
+<h3>Museum Gateway for NYU Students</h3>
+<h4>NYU's Museum Gateway gives students free admission to some of New York City's best cultural institutions. Enjoy freeseums simply by showing your NYUCard at the locations listed above.</h4></div><br>
+
+
+ 	 <h2>Source: <a href="https://www.nyu.edu/life/student-life/getting-involved/museum-gateway.html" target="_blank">NYU Museum Gateway</a> by: <a href="http://websys3.stern.nyu.edu/~lk1854/websys/hw1a.html" target="_blank">Lucy Kang</a></h2></div>
+ 	 <br>
+
+
+
+
+
+ 
+
+ 	 	<!-- El Museo del Barrio
+ 	 	1230 Fifth Avenue, New York, NY 10029
+
+ 	 
+
+ 	 	Grey Art Gallery
+		100 Washington Square East, New York, NY 10003
+
+
+		Museum of the City of New York
+		1220 Fifth Avenue, New York, NY 10029
+
+		Museum of Modern Art
+		11 West 53rd Street, New York, NY 10019
+
+		Museum of the Moving Image
+		36-01 35th Avenue, Queens, NY 11106
+
+		New Museum
+		235 Bowery, New York, NY 10002
+
+
+		Rubin Museum of Art
+		150 West 17th Street, New York, NY 10011
+
+
+		The Frick Collection
+		1 East 70th Street, New York, NY 10021
+
+
+		The Jewish Museum
+		1109 Fifth Avenue, New York, NY 10128
+
+		The New-York Historical Society
+		170 Central Park West, New York, NY 10024
+
+
+		The Studio Museum in Harlem
+		144 West 125th Street, New York, NY 10027
+
+		Whitney Museum of American Art
+		99 Gansevoort Street, New York, NY 10014
+ -->
+
+
+
+  <script src="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script type="text/javascript">
+
+  // var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{
+  //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  // });
+
+
+var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+});
+
+
+
+
+  var myMapData = [
+    {
+      name: "<b>" + "El Museo del Barrio" + "</b>" + "<br>" + "1230 Fifth Avenue, New York, NY 10029",
+      coord: [40.793157,-73.951458]
+    },
+    {
+      name: "<b>" + "Grey Art Gallery" + "</b>" + "<br>" + "100 Washington Square East, New York, NY 10003",
+      coord: [40.730316,-73.995570]
+    },
+    {
+      name: "<b>" + "Museum of the City of New York" + "</b>" + "<br>" + "1220 Fifth Avenue, New York, NY 10029",
+      coord: [40.792466, -73.952161]
+    },
+     {
+      name: "<b>" + "Museum of Modern Art" + "</b>" + "<br>" + "11 West 53rd Street, New York, NY 10019",
+      coord: [40.761496, -73.977631]
+    },
+     {
+      name: "<b>" + "Museum of the Moving Image" + "</b>" + "<br>" + "36-01 35th Avenue, Queens, NY 11106",
+      coord: [40.756246, -73.924159]
+    },
+    {
+      name: "<b>" + "New Museum" + "</b>" + "<br>" + "235 Bowery, New York, NY 10002",
+      coord: [40.722405, -73.992861]
+    },
+    {
+      name: "<b>" + "Rubin Museum of Art" + "</b>" + "<br>" + "150 West 17th Street, New York, NY 10011",
+      coord: [40.740096, -73.997807]
+    },
+    {
+      name: "<b>" + "The Frick Collection" + "</b>" + "<br>" + "1 East 70th Street, New York, NY 10021",
+      coord: [40.771247, -73.967160]
+    },
+    {
+      name: "<b>" + "The Jewish Museum" + "</b>" + "<br>" + "1109 Fifth Avenue, New York, NY 10128",
+      coord: [40.785383, -73.956903]
+    },
+    {
+      name: "<b>" + "The New-York Historical Society" + "</b>" + "<br>" + "170 Central Park West, New York, NY 10024",
+      coord: [40.779225, -73.974005]
+    },
+    {
+      name: "<b>" + "The Studio Museum in Harlem" + "</b>" + "<br>" + "144 West 125th Street, New York, NY 10027",
+      coord: [40.808336, -73.947762]
+    },
+    {
+      name: "<b>" + "Whitney Museum of American Art" + "</b>" + "<br>" + "99 Gansevoort Street, New York, NY 10014",
+      coord: [40.739575, -74.008611]
+    },
+
+  ]
+
+  //var name2 = name.bold();
+  var downtown = [40.706913,-73.987513];
+  var midtown = [40.756880,-73.982899];
+  var uptown = [40.793441, -73.954618];
+  var queens = [40.756360, -73.907862];
+
+  var myZoom = 13;
+  //now the fun stuff:  leaflet!
+  var map = L.map('myMap').setView(midtown, myZoom);
+
+  
+// var map2 = map.panTo('m1').setView([40.793157,-73.951458], panOptions);
+
+
+  map.addLayer(layer)
+  // //Let's add a marker
+  // var marker = L.marker([40.768058,-73.981891]).addTo(map);
+  // marker.bindPopup("<b>Hello world!</b><br>I am a popup.")
+  //Now let's use our custom-made array to make many markers
+  myMapData.forEach(function(element) {
+    var marker = L.marker(element.coord).addTo(map);
+    marker.bindPopup(element.name)
+  });
+  var panOptions = {
+    animate: true,
+    duration: 2
+  }
+    $(".myButton").click(function() {
+      if($(this).attr('id') == 'one' ) {
+        $(this).css('background-color','#453056');
+        map.panTo(downtown, panOptions);
+      } 
+      
+      else 
+      	if 
+
+      ($(this).attr('id') == 'three' ) {
+        $(this).css('background-color','#453056');
+        map.panTo(uptown, panOptions);
+      } 
+
+      else 
+        if 
+
+      ($(this).attr('id') == 'two' ) {
+        $(this).css('background-color','#453056');
+        map.panTo(midtown, panOptions);
+      } 
+
+
+      else {
+
+   
+        $(this).css('background-color','#453056');
+        map.panTo(queens, panOptions);
+      }
+    });
+  </script>
+
+ 
+
+</body>
+</html>
+
